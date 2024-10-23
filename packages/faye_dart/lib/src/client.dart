@@ -180,7 +180,10 @@ class FayeClient with Extensible, TimeoutHelper, EquatableMixin {
 
     // Checking if we manually closed the connection
     if (_manuallyClosed) return;
-    _initWebSocketChannel();
+
+    _state = FayeClientState.unconnected;
+    _connectRequestInProgress = false;
+    handshake(callback: connect);
   }
 
   void handshake({VoidCallback? callback}) {
